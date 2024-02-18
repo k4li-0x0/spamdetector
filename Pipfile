@@ -4,9 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+python-dotenv = "*"
+pyrogram = "==2.0.106"
+pandas = "*"
+alive-progress = "*"
 
 [dev-packages]
-telethon = "1.34.0"
 
 [requires]
 python_version = ">=3.10"

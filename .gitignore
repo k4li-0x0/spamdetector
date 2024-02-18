@@ -3,6 +3,8 @@
 !dataset/**
 !spamdetector/
 !spamdetector/**
+!.env.example
 !Pipfile
 !Pipfile.lock
 !.gitignore
+*.session*
