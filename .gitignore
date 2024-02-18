@@ -1,6 +1,5 @@
 *
 !dataset/
-!dataset/**
 !spamdetector/
 !spamdetector/**
 !.env.example

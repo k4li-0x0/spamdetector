@@ -35,19 +35,23 @@ async def main():
     async with Client('anon', api_id, api_hash) as app:
         app: Client
         for chat_link in CHATS_LIST:
-            chat = await app.get_chat(chat_link) # structure with chat id
+            chat = await app.get_chat(chat_link)  # structure with chat id
             if chat is types.ChatPreview:
                 print(
                     f'<TG Messages Parser> {chat_link} skipped, because it\'s private and you are not subscribed to it'
                 )
                 continue
             print(f'<TG Messages Parser> Reading: {chat.first_name or chat.title}')
-            total = min(await app.get_chat_history_count(chat.id), MAX_MESSAGES_PER_CHANNEL) # just for progress bar
+            total = min(
+                await app.get_chat_history_count(chat.id), MAX_MESSAGES_PER_CHANNEL
+            )  # just for progress bar
             with alive_bar(total, title=(chat.first_name or chat.title)) as bar:
                 async for message in app.get_chat_history(
                     chat.id, MAX_MESSAGES_PER_CHANNEL
                 ):
-                    if message.text is not None: # text can be None, if message is just a picture, for example
+                    if (
+                        message.text is not None
+                    ):  # text can be None, if message is just a picture, for example
                         messages.append(
                             (
                                 chat.id,
