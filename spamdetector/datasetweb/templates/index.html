@@ -12,6 +12,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
     <style>
+        body {
+            transition: all 0.3s ease-in-out;
+        }
+
         #avatar {
             padding-left: 25px !important;
             padding-right: 25px !important;
@@ -65,18 +69,29 @@
 
         const nextmsg = () => {
             console.log('next')
-            $('#message').text('Message '.repeat(100))
-            // TODO: get message from server
+            axios.get('/getmessage').then((response) => {
+                const msg = response.data
+                current_id = msg['id']
+                $('#message').html(msg['message'])
+            })
         }
 
         const onspam = () => {
             console.log('spam')
-            // TODO: call api   
+            axios.get('/setlabel/' + current_id + '/1').then((_) => nextmsg())
+            .catch((e) => {
+                console.error(e)
+                nextmsg()
+            })
         }
 
         const onnotspam = () => {
             console.log('not spam')
-            // TODO: call api   
+            axios.get('/setlabel/' + current_id + '/0').then((_) => nextmsg())
+            .catch((e) => {
+                console.error(e)
+                nextmsg()
+            })
         }
 
         $('#isspam').click(() => {
