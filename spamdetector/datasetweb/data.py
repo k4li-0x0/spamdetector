@@ -22,6 +22,11 @@ if db_init_required:
         cur = con.cursor()
         cur.execute("CREATE TABLE labels (id INTEGER PRIMARY KEY, message_id INTEGER, label INTEGER)")
         con.commit()
+else:
+    with con:
+        cur = con.cursor()
+        cur.execute("DELETE FROM labels")
+        con.commit()
 
 
 def get_message():
