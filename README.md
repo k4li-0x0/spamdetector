@@ -8,3 +8,5 @@
  - Enter your API credentials
  - `python spamdetector/scrapper.py`
  - Profit!
+## How to label dataset
+ - `python spamdetector/datasetweb.py`
