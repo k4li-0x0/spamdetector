@@ -1,4 +1,8 @@
 # Spam detector
+## How to install project
+ - install pipenv: `pip3 install pipenv`
+ - install dependencies: `pipenv install`
+ - run virtual environment shell `pipenv shell`
 ## How to use scrapper
  - Copy .env.example and name it .env
  - Enter your API credentials
