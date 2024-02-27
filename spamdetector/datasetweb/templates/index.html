@@ -28,6 +28,10 @@
             border-color: transparent;
             border-radius: 15px 15px 15px 0;
         }
+
+        .links {
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -35,8 +39,10 @@
     <div class="container-lg card h-100 p-4 my-2 d-flex">
         <div class="d-flex flex-row align-items-center">
             <h1 class="flex-grow-1">Is this a spam message?</h1>
-            <button id="skip"
-                class="align-self-end border-0 bg-body link-secondary link-underline-secondary">skip...</button>
+            <div class="align-self-end d-flex flex-column">
+                <a href="/dump" class="links border-0 bg-body link-secondary link-underline-secondary">Download dump</a>
+                <button id="skip" class=" border-0 bg-body link-secondary link-underline-secondary">skip...</button>
+            </div>
         </div>
         <div class="flex-grow-1 user-select-none mt-5">
             <div class="d-flex flex-row justify-content-center">
