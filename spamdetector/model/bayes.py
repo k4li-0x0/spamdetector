@@ -4,6 +4,8 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
+import joblib
+from pathlib import Path
 
 
 df = pd.read_csv('./dataset/dataset.csv', index_col=0)
@@ -40,5 +42,9 @@ table = plt.table(
     edges='open',
     cellText=[[accuracy, precision, recall, f1]],
 )
+
+Path('./model').mkdir(exist_ok=True)
+joblib.dump(vectorizer, './model/vectorizer.joblib')
+joblib.dump(model, './model/model.joblib')
 
 plt.show()
