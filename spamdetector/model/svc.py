@@ -1,4 +1,5 @@
-from sklearn.naive_bayes import MultinomialNB
+from sklearn.svm import SVC
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import matplotlib.pyplot as plt
 import joblib
@@ -6,7 +7,7 @@ from pathlib import Path
 from vectorizer import *
 
 print('Starting model fitting...')
-model = MultinomialNB()
+model = SVC(C=10, gamma=1, kernel='rbf', verbose=True)
 model.fit(X_train, y_train)
 
 print('Checking results...')
@@ -32,6 +33,6 @@ table = plt.table(
 Path('./model').mkdir(exist_ok=True)
 if not VECTORIZER_PATH.exists():
     joblib.dump(vectorizer, './model/vectorizer.joblib')
-joblib.dump(model, './model/bayes.joblib')
+joblib.dump(model, './model/svc.joblib')
 
 plt.show()

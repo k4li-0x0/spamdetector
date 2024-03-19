@@ -18,6 +18,7 @@ def api_setlabel(id = None, label = None):
     api_getmessage.operations_counter += 1
     if api_getmessage.operations_counter > 100:
         dump_all()
+        api_getmessage.operations_counter = 0
     set_label(id, label)
 
 
