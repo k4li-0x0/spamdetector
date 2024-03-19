@@ -1,0 +1,118 @@
+<html>
+
+<head>
+    <title>Spam Detector</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <style>
+        body {
+            transition: all 0.3s ease-in-out;
+        }
+
+        #avatar {
+            padding-left: 25px !important;
+            padding-right: 25px !important;
+            margin-top: auto;
+            height: 50px !important;
+            display: inline-block;
+            vertical-align: bottom;
+            margin-right: 10px;
+            background-color: #868e96;
+        }
+
+        #message-card {
+            background-color: #f1f3f5;
+            border-color: transparent;
+            border-radius: 15px 15px 15px 0;
+        }
+
+        .links {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body class="h-100">
+    <div class="container-lg card h-100 p-4 my-2 d-flex">
+        <div class="d-flex flex-row align-items-center">
+            <h1 class="flex-grow-1">Is this a spam message?</h1>
+            <div class="align-self-end d-flex flex-column">
+                <a href="/dump" class="links border-0 bg-body link-secondary link-underline-secondary">Download dump</a>
+                <button id="skip" class=" border-0 bg-body link-secondary link-underline-secondary">skip...</button>
+            </div>
+        </div>
+        <div class="flex-grow-1 user-select-none mt-5">
+            <div class="d-flex flex-row justify-content-center">
+                <span id="avatar" class="rounded-circle"></span>
+                <div id="message-card" class="card p-3 pb-1 flex-shrink-1 d-flex">
+                    <h5 class="card-title">User</h5>
+                    <div id="message"></div>
+                    <div class="text-body-tertiary fs-6 align-self-end">∎∎:∎∎</div>
+                </div>
+            </div>
+        </div>
+        <div class="m-2 w-100 d-flex fs-1">
+            <button id="isspam" class="btn btn-dark me-2 flex-grow-1 fs-3">Spam (1)</button>
+            <button id="notspam" class="btn btn-secondary ms-2 flex-grow-1 fs-3">Not spam (2)</button>
+        </div>
+    </div>
+
+    <script>
+        var current_id = -1
+
+        const nextmsg = () => {
+            console.log('next')
+            axios.get('/getmessage').then((response) => {
+                const msg = response.data
+                current_id = msg['id']
+                $('#message').html(msg['message'])
+            })
+        }
+
+        const onspam = () => {
+            console.log('spam')
+            axios.get('/setlabel/' + current_id + '/1').then((_) => nextmsg())
+            .catch((e) => {
+                console.error(e)
+                nextmsg()
+            })
+        }
+
+        const onnotspam = () => {
+            console.log('not spam')
+            axios.get('/setlabel/' + current_id + '/0').then((_) => nextmsg())
+            .catch((e) => {
+                console.error(e)
+                nextmsg()
+            })
+        }
+
+        $('#isspam').click(() => {
+            onspam()
+            nextmsg()
+        })
+        $('#notspam').click(() => {
+            onnotspam()
+            nextmsg()
+        })
+        $('#skip').click(() => {
+            nextmsg()
+        })
+
+        $(window).keydown((e) => {
+            if (e.key === '1') onspam()
+            else if (e.key === '2') onnotspam()
+        })
+
+        nextmsg()
+    </script>
+</body>
+
+</html>

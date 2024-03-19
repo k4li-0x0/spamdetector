@@ -8,6 +8,9 @@ python-dotenv = "*"
 pyrogram = "==2.0.106"
 pandas = "*"
 alive-progress = "*"
+bottle = "*"
+scikit-learn = "*"
+matplotlib = "*"
 
 [dev-packages]
 
