@@ -14,7 +14,7 @@ def api_getmessage():
 
 
 @route('/setlabel/<id:int>/<label:int>')
-def api_setlabel(id = None, label = None):
+def api_setlabel(id=None, label=None):
     api_getmessage.operations_counter += 1
     if api_getmessage.operations_counter > 100:
         dump_all()
@@ -29,4 +29,3 @@ def api_dump():
 
 
 api_getmessage.operations_counter = 0
-    

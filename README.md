@@ -10,3 +10,8 @@
  - Profit!
 ## How to label dataset
  - `python spamdetector/datasetweb.py`
+## How to train model
+ - `python spamdetector/model/bayes.py`
+ - `python spamdetector/model/svc.py`
+## How to run model on local machine:
+ - `python spamdetector/model/util.py`

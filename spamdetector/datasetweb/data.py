@@ -20,7 +20,9 @@ con = connect(database_path)
 if db_init_required:
     with con:
         cur = con.cursor()
-        cur.execute("CREATE TABLE labels (id INTEGER PRIMARY KEY, message_id INTEGER, label INTEGER)")
+        cur.execute(
+            "CREATE TABLE labels (id INTEGER PRIMARY KEY, message_id INTEGER, label INTEGER)"
+        )
         con.commit()
 else:
     with con:
@@ -32,26 +34,39 @@ else:
 def get_message():
     return df.sample(1).to_dict(orient='records')[0]
 
+
 def set_label(id, label):
     global df
     with con:
         df = df.drop(df[df['id'] == id].index)
         cur = con.cursor()
-        cur.execute("INSERT INTO labels (message_id, label) VALUES (?, ?)", (id, label, ))
+        cur.execute(
+            "INSERT INTO labels (message_id, label) VALUES (?, ?)",
+            (
+                id,
+                label,
+            ),
+        )
         con.commit()
+
 
 def dump_all():
     with con:
         cur = con.cursor()
         result = []
-        
+
         cur.execute("SELECT message_id, label FROM labels")
         labels = cur.fetchall()
         for label_row in labels:
             index = label_row[0]
             label = label_row[1]
             message_text = original_df.loc[index, 'message']
-            
-            result.append((message_text, label,))
-        
+
+            result.append(
+                (
+                    message_text,
+                    label,
+                )
+            )
+
         pd.DataFrame(result, columns=['message', 'label']).to_csv(dump_path)

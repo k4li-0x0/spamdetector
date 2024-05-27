@@ -9,3 +9,4 @@
 !.gitignore
 *.session*
 __pycache__/
+!launch.bat
