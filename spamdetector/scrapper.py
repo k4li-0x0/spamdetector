@@ -20,7 +20,6 @@ api_hash = getenv('TELEGRAM_API_HASH')
 MAX_MESSAGES_PER_CHANNEL = safeint(getenv('MAX_MESSAGES_PER_GROUP'), default=1000)
 
 CHATS_LIST = [
-    '@prographon',
     'https://t.me/+gkH1aZPCnBRiYzUy',
     '@piarchat7890',
     '@genshix_chat',
